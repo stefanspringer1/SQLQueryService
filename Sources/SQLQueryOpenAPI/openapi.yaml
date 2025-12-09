@@ -1,0 +1,73 @@
+openapi: 3.0.0
+info:
+  title: Query
+  version: 0.0.1
+
+paths:
+  /query:
+    post:
+      operationId: query
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Input'
+      responses:
+        '200':
+          description: The query result
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Result'
+
+components:
+  schemas:
+    Input:
+      type: object
+      properties:
+        parameters:
+          $ref: '#/components/schemas/Parameters'
+        sql:
+          type: string
+      required:
+        - parameters
+        - sql
+      additionalProperties: false
+    Parameters:
+      type: object
+      properties:
+        apiKey:
+          type: string
+      required:
+        - apiKey
+      additionalProperties: false
+    Result:
+      type: object
+      oneOf:
+        - $ref: '#/components/schemas/Error'
+        - $ref: '#/components/schemas/QueryResult'
+    QueryResult:
+        properties:
+          sql:
+            type: string
+          rows:
+            $ref: '#/components/schemas/Rows'
+        required:
+          - sql
+          - rows
+        additionalProperties: false
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+      required:
+        - error
+      additionalProperties: false
+    Rows:
+      type: array
+      items:
+        $ref: '#/components/schemas/Row'
+    Row:
+      type: object
+      additionalProperties: true
