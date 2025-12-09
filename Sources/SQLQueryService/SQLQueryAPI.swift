@@ -18,6 +18,7 @@ struct ConnectionError: Error, CustomStringConvertible {
     
 }
 
+@available(*, deprecated, message: "this package is deprecated, use the repository https://github.com/struktaris/SQLQueryService instead and note the version number being set to 1.0.0")
 struct SQLQueryAPI: APIProtocol {
     
     let postgresDatabaseMethods: PostgresDatabaseMethods
